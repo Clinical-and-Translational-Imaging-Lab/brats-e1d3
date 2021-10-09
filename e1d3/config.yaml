@@ -1,0 +1,65 @@
+# Configuration File
+
+################# DATA #####################
+data:
+  data_directory_train: '/media/ee/Drive/Datasets/Brain/BraTS2021_Training_Split/Training'
+  data_directory_validate: '/media/ee/Drive/Datasets/Brain/BraTS2021_Training_Split/Validation'
+
+  # Following is for 'Testing'
+  data_directory_test: '/media/ee/Drive/Datasets/Brain/BraTS2021_Validation'
+  save_directory_test: 'inference_results_brats21'
+
+  num_classes: 2
+  channels: [ 'flair_norm', 't1_norm', 't1ce_norm', 't2_norm' ]
+  weight_mask_channel: 'mask'
+  # weight matrices determine the center voxels to sample around
+
+  # suffix of ground truth .nii.gz file
+  seg_file_suffix: 'seg'
+
+################ NETWORK ###################
+network:
+  # data and label shape should be = 3 always (volume shape excluding channels)
+  # for 2D patches, placement of '1' will specify slicing direction.
+
+  data_shape: [ 96, 96, 96 ]
+  label_shape: [ 96, 96, 96 ]
+
+  model_save_directory: 'models_brats21'
+
+  # for testing or resuming training from saved model:
+  model_load_directory: 'models_brats21'
+  model_load_config: [ '2021-07-14_14.03.56', '70', '-0.53' ]
+  # format: [date_time_rand<randomization#>, epoch, val_loss]
+
+############### VALIDATE ###################
+validate:
+  # Validation done at the end of every epoch
+  segments_per_epoch: 1000
+  batch_size: 6
+  augmentation: False
+  augmentations_to_do: [ 'flip', 'affine', 'elastic', 'gamma' ]
+
+################# TRAIN ####################
+train:
+  segments_per_epoch: 500
+  batch_size: 2
+  augmentation: True
+  augmentations_to_do: [ 'flip', 'affine', 'elastic', 'gamma' ]
+
+  epochs: 1000
+
+  workers_multithreading: 12
+
+  ### LR ###
+  # polynomial decay policy
+  initial_learning_rate: 1e-2
+  poly_decay_rate: 0.9
+
+################## TEST ####################
+test:
+  batch_size: 6
+  test_time_aug: False
+  with_label: False
+  save_segmentation: True
+  segment_overlap: 0.5

@@ -1,0 +1,4 @@
+nibabel==3.2.1
+scipy==1.6.3
+torchio==0.18.39
+tensorboard==2.5.0
