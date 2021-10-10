@@ -1,6 +1,6 @@
 # E<sub>1</sub>D<sub>3</sub> U-Net for Brain Tumor Segmentation
 
-This repository contains source code for the method proposed in: [E<sub>1</sub>D<sub>3</sub> U-Net for Brain Tumor
+This repository contains official source code for the method proposed in: [E<sub>1</sub>D<sub>3</sub> U-Net for Brain Tumor
 Segmentation: Submission to the RSNA-ASNR-MICCAI BraTS 2021 Challenge](
 https://arxiv.org/abs/2110.02519).
 
@@ -30,7 +30,7 @@ Preprocess the dataset as follows:
 python data_preprocess.py --data_dir <path_to_dataset>
 ```
 
-**[Only for training and validation datasets only]:** Crop and save data as `.npy` files via:
+**[Only for training datasets only]:** Crop and save data as `.npy` files via:
 ```shell
 python data_crop_npy.py --src_folder <path_to_src_folder> --dst_folder <path_to_dst_folder>
 ```
@@ -88,6 +88,8 @@ docker run -it --rm --gpus all -v "test_data_path":"test_data_path" -v "model_sa
 only be visible to the training/testing session.
 
 <!-- Citation-->
+## Citation
+
 If you found any part of this work useful, please cite as follows:
 ```bibtex
 @misc{bukhari2021e1d3,
