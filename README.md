@@ -27,17 +27,17 @@ demonstration, however this works for other BraTS dataset as well):
 
 Preprocess the dataset as follows:
 ```shell
-python data_preprocess.py --data_dir <path_to_dataset>
+python data_preprocess.py --data_dir "path_to_dataset"
 ```
 
-**[Only for training datasets only]:** Crop and save data as `.npy` files via:
+**[For training datasets only]:** Crop and save data as `.npy` files via:
 ```shell
-python data_crop_npy.py --src_folder <path_to_src_folder> --dst_folder <path_to_dst_folder>
+python data_crop_npy.py --src_folder "path_to_src_folder" --dst_folder "path_to_dst_folder"
 ```
 
-Perform train/val split on the dataset as needed.
+Perform train/val split on the training dataset as needed.
 Place the newly generated splits in different folders, as the network's training session differentiates
-between training and validation datasets according to where it is placed (defined in `config.yaml` file).
+between training and validation splits according to where it is placed (defined in `config.yaml` file).
 
 
 ## Neural Network Training/Testing
