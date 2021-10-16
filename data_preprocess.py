@@ -6,17 +6,18 @@ import nibabel as nib
 
 def preprocess_in_directory(directory):
     """ Normalize & save (in the same directory) data and non-zero masks. """
-    assert os.path.exists(args.folder), f"Path `{args.folder}` does not exist"
+    assert os.path.exists(directory), f"Path `{directory}` does not exist"
     patients = os.listdir(directory)
 
     for p in patients:
+        print(f"Patient: {p}")
         files = os.listdir(os.path.join(directory, p))
         for mod in ['flair', 't1', 't1ce', 't2']:
             img, affine = load_volume(os.path.join(directory, p, p + '_' + mod + '.nii.gz'))
             img, mask = mean_var_norm(img)
             save_volume(img, affine, directory, p, mod + '_norm')
             if mod == 'flair':
-                save_volume(mask, affine, directory, p, 'mask')
+                save_volume(mask.astype(np.uint8), affine, directory, p, 'mask')
 
 
 def mean_var_norm(volume):
@@ -31,7 +32,7 @@ def mean_var_norm(volume):
 
 def load_volume(load_file_name):
     image = nib.load(load_file_name)
-    image_array = image.get_data().astype(np.float32)
+    image_array = image.get_fdata().astype(np.float32)
     image.uncache()
     return image_array, image.affine
 

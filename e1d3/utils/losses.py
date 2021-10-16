@@ -10,7 +10,7 @@ class XEntropyPlusDiceLoss(nn.Module):
         super(XEntropyPlusDiceLoss, self).__init__()
         self.dice_loss = DiceLoss(num_classes=num_classes, reduction_dims=reduction_dims)
         self.ce_loss = XEntropyLoss()
-        print(f"Instantiated: {self.__name__}")
+        print(f"Instantiated: {self.__class__.__name__}")
 
     def forward(self, y_pred, y_true):
         """

@@ -3,8 +3,6 @@ import os
 import numpy as np
 import nibabel as nib
 
-from utils.data_io import DataIO
-
 
 class DataProcessNumpy(object):
     """
@@ -12,7 +10,7 @@ class DataProcessNumpy(object):
     """
 
     def __init__(self, data_directory, save_directory):
-        if save_directory is not None:
+        if save_directory is None:
             save_directory = data_directory
 
         for folder in [data_directory, save_directory]:
@@ -24,8 +22,6 @@ class DataProcessNumpy(object):
         self.channels = ['flair_norm', 't1_norm', 't1ce_norm', 't2_norm']
         self.weight_mask_channel = 'mask'
         self.seg_file_suffix = 'seg'
-
-        self.data_io = DataIO
 
     @staticmethod
     def __get_non_zero_bounding_box(volume):
@@ -86,7 +82,7 @@ class DataProcessNumpy(object):
         file_name = '{0}_{1}.nii.gz'.format(patient, mode)
         file_path = os.path.join(self.data_directory, patient, file_name)
         image = nib.load(file_path)
-        image_array = image.get_data().astype(dtype)
+        image_array = image.get_fdata().astype(dtype)
         image.uncache()  # release cache memory
         if with_info:
             return image_array, image.affine, image.header

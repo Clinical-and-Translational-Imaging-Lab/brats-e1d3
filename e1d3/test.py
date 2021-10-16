@@ -44,7 +44,11 @@ class TestSession:
         self.tta = config_test.get('test_time_aug')
         self.save_segmentation = config_test.get('save_segmentation')
 
-        model_file = config_net.get('model_file', None)
+        model_load_directory = config_net.get('model_load_directory')
+        model_load_config = config_net.get('model_load_config')
+        model_checkpoint_str = 'epoch_{epoch}_val_loss_{val_loss}.pt'.format(
+            epoch=int(model_load_config[1]), val_loss=float(model_load_config[2]))
+        model_file = os.path.join(model_load_directory, model_load_config[0], model_checkpoint_str)
         self.model = PrototypeArchitecture3d(config=config).cuda()
         self.load_model(model_file)
 
@@ -89,7 +93,7 @@ class TestSession:
                                                        np.uint8(np.argmax(tc_prob_map, axis=0) * weight),
                                                        np.uint8(np.argmax(en_prob_map, axis=0) * weight))
             segm_map = self.label_fusion(wt_segm_map, tc_segm_map, en_segm_map)
-            segm_map *= weight
+            segm_map *= weight.astype(segm_map.dtype)
             print('Segmentation Info', '| Shape:', segm_map.shape,
                   '| Labels:', np.unique(segm_map),
                   '| Data-type:', segm_map.dtype)
@@ -100,7 +104,7 @@ class TestSession:
 
             stats = torch.cuda.memory_stats()
             peak_bytes_requirement = stats["allocated_bytes.all.peak"]
-            print('Peak Memory Usage:', peak_bytes_requirement)
+            print('Peak Memory Usage:', peak_bytes_requirement, '(Bytes)')
             torch.cuda.reset_peak_memory_stats()
 
             tn_p = datetime.datetime.now()  # end patient time
