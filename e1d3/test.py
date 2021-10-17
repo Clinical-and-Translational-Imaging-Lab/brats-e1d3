@@ -46,7 +46,7 @@ class TestSession:
 
         model_load_directory = config_net.get('model_load_directory')
         model_load_config = config_net.get('model_load_config')
-        model_checkpoint_str = 'epoch_{epoch}_val_loss_{val_loss}.pt'.format(
+        model_checkpoint_str = 'epoch_{epoch:02d}_val_loss_{val_loss:.2f}.pt'.format(
             epoch=int(model_load_config[1]), val_loss=float(model_load_config[2]))
         model_file = os.path.join(model_load_directory, model_load_config[0], model_checkpoint_str)
         self.model = PrototypeArchitecture3d(config=config).cuda()
