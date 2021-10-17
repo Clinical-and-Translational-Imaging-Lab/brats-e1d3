@@ -7,7 +7,7 @@ data:
 
   # Following is for 'Testing'
   data_directory_test: '/home/eelab/Desktop/sample_dataset/Testing'
-  save_directory_test: 'inference_results'
+  save_directory_test: '/home/eelab/Desktop/brats-e1d3/e1d3/inference_results'
 
   num_classes: 2
   channels: [ 'flair_norm', 't1_norm', 't1ce_norm', 't2_norm' ]
@@ -25,10 +25,10 @@ network:
   data_shape: [ 96, 96, 96 ]
   label_shape: [ 96, 96, 96 ]
 
-  model_save_directory: 'models'
+  model_save_directory: '/home/eelab/Desktop/brats-e1d3/e1d3/models'
 
   # for testing or resuming training from saved model:
-  model_load_directory: 'models'
+  model_load_directory: '/home/eelab/Desktop/brats-e1d3/e1d3/models'
   model_load_config: [ '2021-10-16_14.27.34', '15', '-0.98' ]
   # format: [date_time_rand<randomization#>, epoch, val_loss]
 

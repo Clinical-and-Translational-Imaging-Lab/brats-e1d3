@@ -66,8 +66,8 @@ class TrainSession:
         self.model_checkpoint_filepath = os.path.join(models_folder, run_date_time, model_checkpoint_format)
 
         tensorboard_log_path = os.path.join(models_folder, run_date_time)
-        log_configuration(tensorboard_log_path, config_file)
-        log_configuration(tensorboard_log_path, 'utils/enc1_dec3.py')
+        # log_configuration(tensorboard_log_path, config_file)
+        # log_configuration(tensorboard_log_path, 'utils/enc1_dec3.py')
 
         self.metrics_list_train = ['loss', 'dice_wt', 'dice_tc', 'dice_en']
         self.metrics_list_val = ['loss', 'dice_wt', 'dice_tc', 'dice_en']
