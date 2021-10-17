@@ -76,12 +76,12 @@ To execute the container for training/testing, provide paths in *absolute* forma
 
 **Training:**
 ```shell
-docker run -it --rm --gpus all -v "train_data_path":"train_data_path" -v "val_data_path":"val_data_path" -v "model_save_path":"model_save_path" brats_e1d3 --train --config config.yaml --gpu 0
+docker run -it --rm --gpus all -v "train_data_path":"train_data_path" -v "val_data_path":"val_data_path" -v "model_save_path":"model_save_path" -v "config_path":"config_path" brats_e1d3 --train --config "config_path/config.yaml" --gpu 0
 ```
 
 **Testing:**
 ```shell
-docker run -it --rm --gpus all -v "test_data_path":"test_data_path" -v "model_save_path":"model_save_path" brats_e1d3 --test --config config.yaml --gpu 0
+docker run -it --rm --gpus all -v "test_data_path":"test_data_path" -v "model_save_path":"model_save_path" -v "config_path":"config_path" brats_e1d3 --test --config "config_path/config.yaml" --gpu 0
 ```
 
 **[Note]:** The paths set internally in the docker container should match those provided in `config.yaml`, as those will
