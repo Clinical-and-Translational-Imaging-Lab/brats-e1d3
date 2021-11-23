@@ -280,7 +280,7 @@ class PrototypeArchitecture3d(nn.Module):
 
     def print_model_parameters(self):
         """Helper to print out model parameters"""
-        for param_tensor in net.state_dict():
+        for param_tensor in self.state_dict():
             print(param_tensor, '\t', self.state_dict()[param_tensor].size())
         print("Total Parameters:", sum(param.numel() for param in self.parameters()))
 
