@@ -7,8 +7,7 @@ https://arxiv.org/abs/2110.02519).
 ## Data Preparation:
 
 Download the BraTS dataset.
-The structure of the dataset should be as follows (using nomenclature from BraTS 2021 dataset for the sake of
-demonstration, however this works for other BraTS dataset as well):
+The structure of the dataset should be as follows:
 
     dataset/
         - BraTS2021_AAAAA/
@@ -24,6 +23,10 @@ demonstration, however this works for other BraTS dataset as well):
             BraTS2021_AAAAB_t2.nii.gz
             BraTS2021_AAAAB_seg.nii.gz
         ...
+(The above uses nomenclature from BraTS 2021 dataset for the sake of demonstration.
+The dataset directory should have a _folder_ for each subject, where each folder has files with nomenclature `{foldername}_{modality}.nii.gz`.
+See [`data_io.py`](https://github.com/Clinical-and-Translational-Imaging-Lab/brats-e1d3/blob/main/e1d3/utils/data_io.py))
+
 
 Preprocess the dataset as follows:
 ```shell
@@ -76,12 +79,12 @@ To execute the container for training/testing, provide paths in *absolute* forma
 
 **Training:**
 ```shell
-docker run -it --rm --gpus all -v "train_data_path":"train_data_path" -v "val_data_path":"val_data_path" -v "model_save_path":"model_save_path" -v "config_path":"config_path" brats_e1d3 --train --config "config_path/config.yaml" --gpu 0
+docker run --rm --gpus all -v "train_data_path":"train_data_path" -v "val_data_path":"val_data_path" -v "model_save_path":"model_save_path" -v "config_path":"config_path" brats_e1d3 --train --config "config_path/config.yaml" --gpu 0
 ```
 
 **Testing:**
 ```shell
-docker run -it --rm --gpus all -v "test_data_path":"test_data_path" -v "model_save_path":"model_save_path" -v "config_path":"config_path" brats_e1d3 --test --config "config_path/config.yaml" --gpu 0
+docker run --rm --gpus all -v "test_data_path":"test_data_path" -v "model_load_path":"model_load_path" -v "config_path":"config_path" brats_e1d3 --test --config "config_path/config.yaml" --gpu 0
 ```
 
 **[Note]:** The paths set internally in the docker container should match those provided in `config.yaml`, as those will
