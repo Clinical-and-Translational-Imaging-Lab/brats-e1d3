@@ -41,8 +41,8 @@ class DataIO:
             'list' containing names of patients.
         """
         patients_list = os.listdir(self.data_directory)
-        patients_list = [name for name in patients_list if 'brats' in name.lower()]
-        return patients_list
+        patients_list = [name for name in patients_list if os.path.isdir(os.path.join(self.data_directory, name))]
+        return sorted(patients_list)
 
     def load_patient(self, patient_id):
         """
